@@ -40,7 +40,7 @@
     "doc:deploy": "npm run doc:build && gh-pages --dist styleguide --branch documentation",
     "#snyk-protect": "snyk protect",
     "#prepare": "npm run snyk-protect",
-    "prepare": "is-ci || husky install"
+    "prepare": "npm run build && (is-ci || husky install)"
   },
   "files": [
     "/dist",
