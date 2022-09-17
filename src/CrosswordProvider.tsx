@@ -304,6 +304,13 @@ export interface CrosswordProviderImperative {
    * @since 4.1.0
    */
   setGuess: (row: number, col: number, guess: string) => void;
+
+  /**
+   * Reveals the current focused cell
+   *
+   * @since 4.1.1
+   */
+  revealCurrentCell: () => void;
 }
 
 /**
@@ -427,6 +434,33 @@ const CrosswordProvider = React.forwardRef<
       },
       [getCellData, onCellChange]
     );
+    const revealCharInCurrentCell = useCallback(() => {
+      const row = focusedRow;
+      const col = focusedCol;
+      const cell = getCellData(row, col);
+
+      if (!cell.used) {
+        throw new Error('unexpected setCellCharacter call');
+      }
+
+      // update the gridData with the guess
+      setGridData(
+        produce((draft) => {
+          (draft[row][col] as UsedCellData).guess = cell.answer;
+        })
+      );
+
+      // push the row/col for checking!
+      setCheckQueue(
+        produce((draft) => {
+          draft.push({ row, col });
+        })
+      );
+
+      if (onCellChange) {
+        onCellChange(row, col, cell.answer);
+      }
+    }, [getCellData, focused, focusedRow, focusedRow]);
 
     const notifyAnswerComplete = useCallback(
       (
@@ -1010,6 +1044,14 @@ const CrosswordProvider = React.forwardRef<
         setGuess: (row: number, col: number, guess: string) => {
           // REVIEW: should we force-case this?
           setCellCharacter(row, col, guess.toUpperCase());
+        },
+        /**
+         * Reveals the current focused cell
+         *
+         * @since 4.1.1
+         */
+        revealCurrentCell: () => {
+          revealCharInCurrentCell();
         },
       }),
       [

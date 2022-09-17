@@ -126,6 +126,13 @@ const Crossword = React.forwardRef<CrosswordImperative, CrosswordProps>(
          */
         setGuess: (row: number, col: number, guess: string) =>
           providerRef.current?.setGuess(row, col, guess),
+
+        /**
+         * Reveals the current focused cell
+         *
+         * @since 4.1.1
+         */
+        revealCurrentCell: () => providerRef.current?.revealCurrentCell(),
       }),
       []
     );
