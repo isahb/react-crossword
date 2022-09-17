@@ -220,7 +220,8 @@ const CrosswordProvider = react_1.default.forwardRef(({ data, theme, onAnswerCom
         }
     }, [getCellData, onCellChange]);
     const revealCharInCurrentCell = (0, react_1.useCallback)(() => {
-        const row = focusedRow, col = focusedCol;
+        const row = focusedRow;
+        const col = focusedCol;
         const cell = getCellData(row, col);
         if (!cell.used) {
             throw new Error('unexpected setCellCharacter call');
@@ -236,7 +237,7 @@ const CrosswordProvider = react_1.default.forwardRef(({ data, theme, onAnswerCom
         if (onCellChange) {
             onCellChange(row, col, cell.answer);
         }
-    }, [getCellData, focused, focusedRow, focusedRow]);
+    }, [currentDirection, focused, focusedCol, focusedRow, getCellData]);
     const notifyAnswerComplete = (0, react_1.useCallback)((direction, number, correct, answer) => {
         if (onAnswerComplete) {
             onAnswerComplete(direction, number, correct, answer);
@@ -672,10 +673,10 @@ const CrosswordProvider = react_1.default.forwardRef(({ data, theme, onAnswerCom
             setCellCharacter(row, col, guess.toUpperCase());
         },
         /**
-        * Reveals the current focused cell
-        *
-        * @since 4.1.1
-        */
+         * Reveals the current focused cell
+         *
+         * @since 4.1.1
+         */
         revealCurrentCell: () => {
             revealCharInCurrentCell();
         },
