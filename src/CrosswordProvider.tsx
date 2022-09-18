@@ -1061,6 +1061,7 @@ const CrosswordProvider = React.forwardRef<
         focus,
         onLoadedCorrect,
         setCellCharacter,
+        revealCharInCurrentCell,
         storageKey,
         useStorage,
       ]

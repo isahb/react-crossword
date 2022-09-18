@@ -686,6 +686,7 @@ const CrosswordProvider = react_1.default.forwardRef(({ data, theme, onAnswerCom
         focus,
         onLoadedCorrect,
         setCellCharacter,
+        revealCharInCurrentCell,
         storageKey,
         useStorage,
     ]);
