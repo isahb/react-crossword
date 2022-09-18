@@ -219,25 +219,6 @@ const CrosswordProvider = react_1.default.forwardRef(({ data, theme, onAnswerCom
             onCellChange(row, col, char);
         }
     }, [getCellData, onCellChange]);
-    const revealCharInCurrentCell = (0, react_1.useCallback)(() => {
-        const row = focusedRow;
-        const col = focusedCol;
-        const cell = getCellData(row, col);
-        if (!cell.used) {
-            throw new Error('unexpected setCellCharacter call');
-        }
-        // update the gridData with the guess
-        setGridData((0, immer_1.default)((draft) => {
-            draft[row][col].guess = cell.answer;
-        }));
-        // push the row/col for checking!
-        setCheckQueue((0, immer_1.default)((draft) => {
-            draft.push({ row, col });
-        }));
-        if (onCellChange) {
-            onCellChange(row, col, cell.answer);
-        }
-    }, [onCellChange, getCellData, focusedRow, focusedCol]);
     const notifyAnswerComplete = (0, react_1.useCallback)((direction, number, correct, answer) => {
         if (onAnswerComplete) {
             onAnswerComplete(direction, number, correct, answer);
@@ -593,6 +574,25 @@ const CrosswordProvider = react_1.default.forwardRef(({ data, theme, onAnswerCom
         // But, since we're using a Ref, this is just a simple assignment!
         registeredFocusHandler.current = focusHandler;
     }, []);
+    const revealCharInCurrentCell = (0, react_1.useCallback)(() => {
+        const row = focusedRow;
+        const col = focusedCol;
+        const cell = getCellData(row, col);
+        if (!cell.used) {
+            throw new Error('unexpected setCellCharacter call');
+        }
+        // update the gridData with the guess
+        setGridData((0, immer_1.default)((draft) => {
+            draft[row][col].guess = cell.answer;
+        }));
+        // push the row/col for checking!
+        setCheckQueue((0, immer_1.default)((draft) => {
+            draft.push({ row, col });
+        }));
+        if (onCellChange) {
+            onCellChange(row, col, cell.answer);
+        }
+    }, [currentDirection, focus, focused, focusedCol, focusedRow, getCellData]);
     // imperative commands...
     (0, react_1.useImperativeHandle)(ref, () => ({
         /**

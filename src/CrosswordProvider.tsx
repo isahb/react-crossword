@@ -434,33 +434,6 @@ const CrosswordProvider = React.forwardRef<
       },
       [getCellData, onCellChange]
     );
-    const revealCharInCurrentCell = useCallback(() => {
-      const row = focusedRow;
-      const col = focusedCol;
-      const cell = getCellData(row, col);
-
-      if (!cell.used) {
-        throw new Error('unexpected setCellCharacter call');
-      }
-
-      // update the gridData with the guess
-      setGridData(
-        produce((draft) => {
-          (draft[row][col] as UsedCellData).guess = cell.answer;
-        })
-      );
-
-      // push the row/col for checking!
-      setCheckQueue(
-        produce((draft) => {
-          draft.push({ row, col });
-        })
-      );
-
-      if (onCellChange) {
-        onCellChange(row, col, cell.answer);
-      }
-    }, [onCellChange, getCellData, focusedRow, focusedCol]);
 
     const notifyAnswerComplete = useCallback(
       (
@@ -947,6 +920,34 @@ const CrosswordProvider = React.forwardRef<
       },
       []
     );
+
+    const revealCharInCurrentCell = useCallback(() => {
+      const row = focusedRow;
+      const col = focusedCol;
+      const cell = getCellData(row, col);
+
+      if (!cell.used) {
+        throw new Error('unexpected setCellCharacter call');
+      }
+
+      // update the gridData with the guess
+      setGridData(
+        produce((draft) => {
+          (draft[row][col] as UsedCellData).guess = cell.answer;
+        })
+      );
+
+      // push the row/col for checking!
+      setCheckQueue(
+        produce((draft) => {
+          draft.push({ row, col });
+        })
+      );
+
+      if (onCellChange) {
+        onCellChange(row, col, cell.answer);
+      }
+    }, [currentDirection, focus, focused, focusedCol, focusedRow, getCellData]);
 
     // imperative commands...
     useImperativeHandle(
