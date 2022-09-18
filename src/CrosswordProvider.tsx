@@ -921,7 +921,7 @@ const CrosswordProvider = React.forwardRef<
       []
     );
 
-    const revealCharInCurrentCell = useCallback(() => {
+    const revealCharInCurrentCell = () => {
       const row = focusedRow;
       const col = focusedCol;
       const cell = getCellData(row, col);
@@ -947,7 +947,7 @@ const CrosswordProvider = React.forwardRef<
       if (onCellChange) {
         onCellChange(row, col, cell.answer);
       }
-    }, [currentDirection, focus, focused, focusedCol, focusedRow, getCellData]);
+    };
 
     // imperative commands...
     useImperativeHandle(

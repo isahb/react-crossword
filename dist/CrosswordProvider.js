@@ -574,7 +574,7 @@ const CrosswordProvider = react_1.default.forwardRef(({ data, theme, onAnswerCom
         // But, since we're using a Ref, this is just a simple assignment!
         registeredFocusHandler.current = focusHandler;
     }, []);
-    const revealCharInCurrentCell = (0, react_1.useCallback)(() => {
+    const revealCharInCurrentCell = () => {
         const row = focusedRow;
         const col = focusedCol;
         const cell = getCellData(row, col);
@@ -592,7 +592,7 @@ const CrosswordProvider = react_1.default.forwardRef(({ data, theme, onAnswerCom
         if (onCellChange) {
             onCellChange(row, col, cell.answer);
         }
-    }, [currentDirection, focus, focused, focusedCol, focusedRow, getCellData]);
+    };
     // imperative commands...
     (0, react_1.useImperativeHandle)(ref, () => ({
         /**
