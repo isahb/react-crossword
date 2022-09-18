@@ -237,7 +237,7 @@ const CrosswordProvider = react_1.default.forwardRef(({ data, theme, onAnswerCom
         if (onCellChange) {
             onCellChange(row, col, cell.answer);
         }
-    }, [currentDirection, focused, focusedCol, focusedRow, getCellData]);
+    }, [onCellChange, getCellData, focusedRow, focusedRow]);
     const notifyAnswerComplete = (0, react_1.useCallback)((direction, number, correct, answer) => {
         if (onAnswerComplete) {
             onAnswerComplete(direction, number, correct, answer);
