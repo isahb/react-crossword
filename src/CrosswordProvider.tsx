@@ -460,7 +460,7 @@ const CrosswordProvider = React.forwardRef<
       if (onCellChange) {
         onCellChange(row, col, cell.answer);
       }
-    }, [currentDirection, focused, focusedCol, focusedRow, getCellData]);
+    }, [onCellChange, getCellData, focusedRow, focusedRow]);
 
     const notifyAnswerComplete = useCallback(
       (
